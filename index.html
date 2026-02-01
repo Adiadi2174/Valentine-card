@@ -1,155 +1,66 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <title>Valentine for Adi Khan</title>
-  <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet">
-
-  <style>
-    body {
-      margin: 0;
-      height: 100vh;
-      background: linear-gradient(135deg, #ffd6e8, #e7d7ff, #d7f9f1);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-family: 'Press Start 2P', cursive;
-      overflow: hidden;
-    }
-
-    .card {
-      background: #fff0f6;
-      border: 6px solid #ff85b3;
-      border-radius: 20px;
-      padding: 25px;
-      width: 90%;
-      max-width: 450px;
-      text-align: center;
-      box-shadow: 0 20px 0 #ffb3d9;
-      position: relative;
-    }
-
-    h1 {
-      font-size: 14px;
-      color: #d6336c;
-      margin-bottom: 15px;
-      line-height: 1.6;
-    }
-
-    .main-img {
-      width: 100%;
-      max-width: 250px;
-      border-radius: 15px;
-      border: 4px solid #ff85b3;
-      box-shadow: 0 5px 15px rgba(0,0,0,0.1);
-    }
-
-    .buttons {
-      margin-top: 20px;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-    }
-
-    button {
-      font-family: 'Press Start 2P', cursive;
-      font-size: 11px;
-      padding: 12px 18px;
-      border-radius: 12px;
-      border: 4px solid #000;
-      cursor: pointer;
-      margin: 8px;
-      transition: transform 0.1s;
-    }
-
-    button:active {
-      transform: scale(0.95);
-    }
-
-    .yes-button { background: #69db7c; position: relative; z-index: 10; }
-    .no-button { background: #ff6b6b; }
-
-    #side-image {
-      position: absolute;
-      right: -100px;
-      top: 50%;
-      transform: translateY(-50%);
-      width: 80px;
-      display: none;
-      image-rendering: pixelated;
-    }
-  </style>
-</head>
-<body>
-
-<div class="card">
-  <h1 id="main-heading">Will you be my Valentine?</h1>
-
-  <img id="side-image" src="https://media.giphy.com/media/v1.Y2lkPTc5MGI3NjExMnd6Z3BqcHpxZ3BqcHpxZ3BqcHpxZ3BqcHpxZ3BqcHpxZ3BqcHpxJmVwPXYxX2ludGVybmFsX2dpZl9ieV9pZCZjdD1n/OPU6wUKFt8Hyc/giphy.gif">
-
-  <div id="media-container">
-    <img src="IMG-20251103-WA0084.jpg" class="main-img" alt="Valentine Photo">
-  </div>
-
-  <div class="buttons">
-    <button class="yes-button" onclick="handleYes()">YES</button>
-    <button class="no-button" onclick="handleNo()">NO</button>
-  </div>
-</div>
-
-<script>
-  let noCount = 0;
-  let confirmed = false;
-
-  const otherMessages = ["u sure?", "don’t do this", "i’ll cry", "LAST CHANCE"];
+const messages = ["pls", "u sure?", "don’t do this", "i’ll cry", "LAST CHANCE"];
+  let index = 0;
+  let yesClickCount = 0;
 
   function handleNo() {
     const noBtn = document.querySelector(".no-button");
     const yesBtn = document.querySelector(".yes-button");
-    const sideImg = document.getElementById("side-image");
+    noBtn.innerText = messages[index];
+    index = (index + 1) % messages.length;
     
-    noCount++;
-
-    if (noCount === 1) {
-      noBtn.innerText = "Bro it doesnt work this way im adi khan you cant say no";
-    } else if (noCount === 2) {
-      noBtn.innerText = "SAYS NO TO ADI KHAN TWICE?";
-      sideImg.style.display = "block";
-    } else {
-      noBtn.innerText = otherMessages[(noCount - 3) % otherMessages.length];
-    }
-
-    // Increase Yes button size
-    let currentSize = parseFloat(window.getComputedStyle(yesBtn).fontSize);
-    yesBtn.style.fontSize = (currentSize * 1.5) + "px";
-    yesBtn.style.padding = (parseFloat(window.getComputedStyle(yesBtn).padding) * 1.2) + "px";
+    // Makes the button bigger
+    let size = parseFloat(window.getComputedStyle(yesBtn).fontSize);
+    yesBtn.style.fontSize = (size * 1.4) + "px";
   }
 
   function handleYes() {
-    if (!confirmed) {
-      document.getElementById("main-heading").innerText = "Are you 100% sure??";
-      document.getElementById("side-image").style.display = "none";
-      confirmed = true;
+    yesClickCount++;
+    const card = document.querySelector(".card");
+    
+    // --- RESET LOGIC ---
+    // This looks for the button and shrinks it back to 12px immediately
+    const yesBtn = document.querySelector(".yes-button");
+    if (yesBtn) {
+        yesBtn.style.fontSize = "12px"; 
+    }
+
+    if (yesClickCount === 1) {
+      card.innerHTML = `
+        <h1 style="font-size:16px; color:#d6336c;">Wait... are you sure??</h1>
+        <img src="https://media.giphy.com/media/26n6WywJyh39n1pBu/giphy.gif" width="160">
+        <div class="buttons">
+          <button class="yes-button" onclick="handleYes()" style="background:#69db7c; font-size:12px;">YES</button>
+          <button class="no-button" onclick="handleNo()" style="background:#ff6b6b;">NO</button>
+        </div>`;
+    } else if (yesClickCount === 2) {
+      card.innerHTML = `
+        <h1 style="font-size:16px; color:#d6336c;">bro i dont believe you</h1>
+        <img src="https://media.giphy.com/media/ANbD1CCdA3ADe/giphy.gif" width="160">
+        <div class="buttons">
+          <button class="yes-button" onclick="handleYes()" style="background:#69db7c; font-size:12px;">IM NOT LYINGGG</button>
+          <button class="no-button" onclick="handleNo()" style="background:#ff6b6b;">NO</button>
+        </div>`;
+    } else if (yesClickCount === 3) {
+      card.classList.add("shake-it");
+      card.innerHTML = `
+        <h1 style="font-size:16px; color:#d6336c;">LIES!!</h1>
+        <img src="https://media.giphy.com/media/3ov9k5nG3dW6JCzXNK/giphy.gif" width="160">
+        <div class="buttons">
+          <button class="yes-button" onclick="handleYes()" style="background:#69db7c; font-size:12px;">STOP</button>
+          <button class="no-button" onclick="handleNo()" style="background:#ff6b6b;">NO</button>
+        </div>`;
     } else {
+      card.classList.remove("shake-it");
       document.body.innerHTML = `
-        <div style="background: linear-gradient(135deg, #ffd6e8, #e7d7ff); height:100vh; width:100vw; display:flex; align-items:center; justify-content:center; font-family:'Press Start 2P', cursive; text-align:center;">
-          <div style="background:#fff0f6; border:6px solid #ff85b3; border-radius:20px; padding:30px; box-shadow:0 20px 0 #ffb3d9; max-width: 500px;">
-            <h1 style="font-size:22px; color: #d6336c;">YAYYY!</h1>
-            
-            <img src="https://media.giphy.com/media/v1.Y2lkPTc5MGI3NjExM3ZicWp6bmZ4bmZ4bmZ4bmZ4bmZ4bmZ4bmZ4bmZ4bmZ4bmZ4bmZ4JmVwPXYxX2ludGVybmFsX2dpZl9ieV9pZCZjdD1n/DS7jbVr1fvItO/giphy.gif" 
-                 style="width:100%; max-width:280px; border-radius:10px; margin: 15px 0; border: 4px solid #ff85b3;">
-            
-            <p style="font-size:12px; color: #d6336c; margin: 15px 0; line-height:1.6;">NOW YOU GET MY ANNOYING ASS</p>
-            
-            <video width="180" autoplay loop muted playsinline style="border-radius: 10px; border: 3px solid #ff85b3;">
-              <source src="VID-20251103-WA0006.mp4" type="video/mp4">
-            </video>
+        <div style="background: linear-gradient(135deg, #ffd6e8, #e7d7ff); height:100vh; display:flex; align-items:center; justify-content:center; font-family:'Press Start 2P', cursive; padding: 20px;">
+          <div style="background:#fff0f6; border:6px solid #ff85b3; border-radius:20px; padding:30px; text-align:center; box-shadow:0 20px 0 #ffb3d9; max-width: 500px;">
+            <h1 style="font-size:14px; line-height: 1.6; color:#d6336c;">
+              OKAYYY I BELIEVE YOU NOW ENJOY IN ANNOYING ASS<br><br>
+              WEAR THE RED DRESS BRO YOURE TOO PRETTY WAY OUT OF MY LEAGUE
+            </h1>
+            <img src="https://media.giphy.com/media/DS7jb68ODlh4c/giphy.gif" width="250" style="margin-top: 20px; border-radius: 10px;">
           </div>
-        </div>
-      `;
+        </div>`;
     }
   }
 </script>
-
-</body>
-</html>
