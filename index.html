@@ -2,9 +2,7 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>💖 Valentine 💖</title>
-
-  <!-- Pixel-style font -->
+  <title>Valentine for Adi Khan</title>
   <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet">
 
   <style>
@@ -16,120 +14,140 @@
       align-items: center;
       justify-content: center;
       font-family: 'Press Start 2P', cursive;
+      overflow: hidden;
     }
 
     .card {
       background: #fff0f6;
       border: 6px solid #ff85b3;
       border-radius: 20px;
-      padding: 30px;
+      padding: 25px;
       width: 90%;
-      max-width: 420px;
+      max-width: 450px;
       text-align: center;
       box-shadow: 0 20px 0 #ffb3d9;
+      position: relative;
     }
 
     h1 {
-      font-size: 16px;
+      font-size: 14px;
       color: #d6336c;
-      margin-bottom: 20px;
+      margin-bottom: 15px;
+      line-height: 1.6;
     }
 
-    img {
-      width: 160px;
-      image-rendering: pixelated;
+    .main-img {
+      width: 100%;
+      max-width: 250px;
+      border-radius: 15px;
+      border: 4px solid #ff85b3;
+      box-shadow: 0 5px 15px rgba(0,0,0,0.1);
     }
 
     .buttons {
-      margin-top: 25px;
+      margin-top: 20px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
     }
 
     button {
       font-family: 'Press Start 2P', cursive;
-      font-size: 12px;
+      font-size: 11px;
       padding: 12px 18px;
       border-radius: 12px;
       border: 4px solid #000;
       cursor: pointer;
       margin: 8px;
+      transition: transform 0.1s;
     }
 
-    .yes-button {
-      background: #69db7c;
+    button:active {
+      transform: scale(0.95);
     }
 
-    .no-button {
-      background: #ff6b6b;
-      position: relative;
-    }
+    .yes-button { background: #69db7c; position: relative; z-index: 10; }
+    .no-button { background: #ff6b6b; }
 
-    .sparkles {
-      font-size: 14px;
-      margin-bottom: 10px;
+    #side-image {
+      position: absolute;
+      right: -100px;
+      top: 50%;
+      transform: translateY(-50%);
+      width: 80px;
+      display: none;
+      image-rendering: pixelated;
     }
   </style>
 </head>
 <body>
 
 <div class="card">
-  <div class="sparkles">✨💗✨💗✨</div>
-  <h1>Will you be my Valentine? 💕</h1>
+  <h1 id="main-heading">Will you be my Valentine?</h1>
 
-  <img src="https://media.giphy.com/media/JIX9t2j0ZTN9S/giphy.gif" alt="Cute Pixel Cat">
+  <img id="side-image" src="https://media.giphy.com/media/v1.Y2lkPTc5MGI3NjExMnd6Z3BqcHpxZ3BqcHpxZ3BqcHpxZ3BqcHpxZ3BqcHpxZ3BqcHpxJmVwPXYxX2ludGVybmFsX2dpZl9ieV9pZCZjdD1n/OPU6wUKFt8Hyc/giphy.gif">
+
+  <div id="media-container">
+    <img src="IMG-20251103-WA0084.jpg" class="main-img" alt="Valentine Photo">
+  </div>
 
   <div class="buttons">
-    <button class="yes-button" onclick="handleYes()">YES 💖</button>
-    <button class="no-button" onclick="handleNo()">NO 💔</button>
+    <button class="yes-button" onclick="handleYes()">YES</button>
+    <button class="no-button" onclick="handleNo()">NO</button>
   </div>
 </div>
 
 <script>
-  const messages = [
-    "pls 🥺",
-    "u sure? 😭",
-    "don’t do this 💔",
-    "i’ll cry 😿",
-    "LAST CHANCE 😭💖"
-  ];
+  let noCount = 0;
+  let confirmed = false;
 
-  let index = 0;
+  const otherMessages = ["u sure?", "don’t do this", "i’ll cry", "LAST CHANCE"];
 
   function handleNo() {
     const noBtn = document.querySelector(".no-button");
     const yesBtn = document.querySelector(".yes-button");
+    const sideImg = document.getElementById("side-image");
+    
+    noCount++;
 
-    noBtn.innerText = messages[index];
-    index = (index + 1) % messages.length;
+    if (noCount === 1) {
+      noBtn.innerText = "Bro it doesnt work this way im adi khan you cant say no";
+    } else if (noCount === 2) {
+      noBtn.innerText = "SAYS NO TO ADI KHAN TWICE?";
+      sideImg.style.display = "block";
+    } else {
+      noBtn.innerText = otherMessages[(noCount - 3) % otherMessages.length];
+    }
 
-    let size = parseFloat(window.getComputedStyle(yesBtn).fontSize);
-    yesBtn.style.fontSize = (size * 1.4) + "px";
+    // Increase Yes button size
+    let currentSize = parseFloat(window.getComputedStyle(yesBtn).fontSize);
+    yesBtn.style.fontSize = (currentSize * 1.5) + "px";
+    yesBtn.style.padding = (parseFloat(window.getComputedStyle(yesBtn).padding) * 1.2) + "px";
   }
 
   function handleYes() {
-    document.body.innerHTML = `
-      <div style="
-        background: linear-gradient(135deg, #ffd6e8, #e7d7ff);
-        height:100vh;
-        display:flex;
-        align-items:center;
-        justify-content:center;
-        font-family:'Press Start 2P', cursive;
-      ">
-        <div style="
-          background:#fff0f6;
-          border:6px solid #ff85b3;
-          border-radius:20px;
-          padding:30px;
-          text-align:center;
-          box-shadow:0 20px 0 #ffb3d9;
-        ">
-          <h1 style="font-size:16px;">YAYYY 💖💖💖</h1>
-          <p style="font-size:12px;">You made my heart go 💥✨</p>
-          <img src="https://media.giphy.com/media/MDJ9IbxxvDUQM/giphy.gif" width="180">
-          <p style="font-size:12px;">Happy Valentine’s 💌</p>
+    if (!confirmed) {
+      document.getElementById("main-heading").innerText = "Are you 100% sure??";
+      document.getElementById("side-image").style.display = "none";
+      confirmed = true;
+    } else {
+      document.body.innerHTML = `
+        <div style="background: linear-gradient(135deg, #ffd6e8, #e7d7ff); height:100vh; width:100vw; display:flex; align-items:center; justify-content:center; font-family:'Press Start 2P', cursive; text-align:center;">
+          <div style="background:#fff0f6; border:6px solid #ff85b3; border-radius:20px; padding:30px; box-shadow:0 20px 0 #ffb3d9; max-width: 500px;">
+            <h1 style="font-size:22px; color: #d6336c;">YAYYY!</h1>
+            
+            <img src="https://media.giphy.com/media/v1.Y2lkPTc5MGI3NjExM3ZicWp6bmZ4bmZ4bmZ4bmZ4bmZ4bmZ4bmZ4bmZ4bmZ4bmZ4bmZ4JmVwPXYxX2ludGVybmFsX2dpZl9ieV9pZCZjdD1n/DS7jbVr1fvItO/giphy.gif" 
+                 style="width:100%; max-width:280px; border-radius:10px; margin: 15px 0; border: 4px solid #ff85b3;">
+            
+            <p style="font-size:12px; color: #d6336c; margin: 15px 0; line-height:1.6;">NOW YOU GET MY ANNOYING ASS</p>
+            
+            <video width="180" autoplay loop muted playsinline style="border-radius: 10px; border: 3px solid #ff85b3;">
+              <source src="VID-20251103-WA0006.mp4" type="video/mp4">
+            </video>
+          </div>
         </div>
-      </div>
-    `;
+      `;
+    }
   }
 </script>
 
